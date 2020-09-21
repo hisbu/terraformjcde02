@@ -1,0 +1,23 @@
+digraph {
+	compound = "true"
+	newrank = "true"
+	subgraph "root" {
+		"[root] aws_instance.web" [label = "aws_instance.web", shape = "box"]
+		"[root] aws_s3_bucket.mybucket" [label = "aws_s3_bucket.mybucket", shape = "box"]
+		"[root] aws_security_group.allow_http" [label = "aws_security_group.allow_http", shape = "box"]
+		"[root] aws_security_group.allow_ssh" [label = "aws_security_group.allow_ssh", shape = "box"]
+		"[root] provider.aws" [label = "provider.aws", shape = "diamond"]
+		"[root] aws_instance.web" -> "[root] aws_security_group.allow_http"
+		"[root] aws_instance.web" -> "[root] aws_security_group.allow_ssh"
+		"[root] aws_s3_bucket.mybucket" -> "[root] provider.aws"
+		"[root] aws_security_group.allow_http" -> "[root] provider.aws"
+		"[root] aws_security_group.allow_ssh" -> "[root] provider.aws"
+		"[root] meta.count-boundary (EachMode fixup)" -> "[root] aws_instance.web"
+		"[root] meta.count-boundary (EachMode fixup)" -> "[root] aws_s3_bucket.mybucket"
+		"[root] provider.aws (close)" -> "[root] aws_instance.web"
+		"[root] provider.aws (close)" -> "[root] aws_s3_bucket.mybucket"
+		"[root] root" -> "[root] meta.count-boundary (EachMode fixup)"
+		"[root] root" -> "[root] provider.aws (close)"
+	}
+}
+
