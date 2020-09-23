@@ -1,5 +1,5 @@
 resource "aws_key_pair" "terraformKey" {
-  key_name    = "terraformKey"
+  key_name    = "terraformKey2"
   public_key  = file(var.PATH_TO_PUBLIC_KEY)
 }
 
